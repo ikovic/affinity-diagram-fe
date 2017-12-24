@@ -1,0 +1,30 @@
+{
+  "name": "affinity-diagram-fe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikovic/affinity-diagram-fe.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ikovic/affinity-diagram-fe/issues"
+  },
+  "homepage": "https://github.com/ikovic/affinity-diagram-fe#readme",
+  "devDependencies": {
+    "elm": "^0.18.0",
+    "gulp": "^3.9.1",
+    "gulp-elm": "^0.7.2",
+    "gulp-sass": "^3.1.0",
+    "pushstate-server": "^3.0.1"
+  },
+  "prettier": {
+    "singleQuote": true
+  }
+}

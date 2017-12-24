@@ -1,8 +1,8 @@
 module App exposing (..)
 
-import Html exposing (text)
+import Html exposing (text, div)
 
 
 main : Html.Html msg
 main =
-    text "Hello"
+    div [] [ text "Hello" ]
