@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Elm App</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div id="app">
+        <!-- we will embed our Elm app here -->
+    </div>
+    <script src="../build/main.js"></script>
+    <script>
+        var node = document.getElementById('app');
+        var app = Elm.App.embed(node);
+    </script>
+</body>
+
+</html>
