@@ -1,16 +1,16 @@
 'use strict';
 
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var elm = require('gulp-elm');
-var server = require('pushstate-server');
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const elm = require('gulp-elm');
+const server = require('pushstate-server');
 
-var ELM_SRC = './src/**/*.elm';
-var ELM_BUNDLE = 'main.js';
-var SASS_SRC = './src/**/*.scss';
-var SASS_MAIN = './src/style.scss';
-var HTML_SRC = './static/index.html';
-var OUTPUT = './build/';
+const ELM_SRC = './src/**/*.elm';
+const ELM_BUNDLE = 'main.js';
+const SASS_SRC = './src/**/*.scss';
+const SASS_MAIN = './src/style.scss';
+const HTML_SRC = './static/index.html';
+const OUTPUT = './build/';
 
 gulp.task('styles', function() {
   gulp
@@ -28,7 +28,7 @@ gulp.task('elm-init', elm.init);
 gulp.task('elm-bundle', ['elm-init'], function() {
   return gulp
     .src(ELM_SRC)
-    .pipe(elm.bundle(ELM_BUNDLE))
+    .pipe(elm.bundle(ELM_BUNDLE).on('error', e => console.log(e)))
     .pipe(gulp.dest(OUTPUT));
 });
 
