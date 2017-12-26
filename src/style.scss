@@ -1,6 +1,7 @@
 // VARIABLES
 
 $grey-lighter: hsl(0, 0%, 86%);
+$spc-xs: 0.25rem;
 $spc-s: 0.5rem;
 $spc-m: 1rem;
 
@@ -25,6 +26,21 @@ $spc-m: 1rem;
 }
 
 // BUCKETS
+.bucket-container {
+  position: relative;
+}
+
+.add-bucket {
+  position: absolute;
+  bottom: $spc-xs;
+  right: $spc-xs;
+}
+
+.remove-bucket {
+  position: absolute;
+  top: $spc-xs;
+  right: $spc-xs;
+}
 
 .bucket-body {
   padding-top: 1rem;

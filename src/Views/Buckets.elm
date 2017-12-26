@@ -16,7 +16,9 @@ view buckets =
 bucketLevel : Bucket -> Html msg
 bucketLevel bucket =
     div [ class "hero is-light bucket-container" ]
-        [ div [ class "hero-body bucket-body" ]
+        [ addBucket
+        , removeBucket
+        , div [ class "hero-body bucket-body" ]
             [ div [ class "is-fullwidth light-border--bottom" ]
                 [ h5 [ class "title is-5" ]
                     [ text bucket.label ]
@@ -25,6 +27,26 @@ bucketLevel bucket =
                 , div [ class "level margin-m--vertical" ]
                     (List.map issueInBucket bucket.issues)
                 ]
+            ]
+        ]
+
+
+addBucket : Html msg
+addBucket =
+    button [ class "add-bucket button is-primary is-rounded" ]
+        [ span [ class "icon" ]
+            [ i [ class "fa fa-plus" ]
+                []
+            ]
+        ]
+
+
+removeBucket : Html msg
+removeBucket =
+    button [ class "remove-bucket button is-danger is-rounded" ]
+        [ span [ class "icon" ]
+            [ i [ class "fa fa-minus" ]
+                []
             ]
         ]
 
