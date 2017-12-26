@@ -28,7 +28,9 @@ gulp.task('elm-init', elm.init);
 gulp.task('elm-bundle', ['elm-init'], function() {
   return gulp
     .src(ELM_SRC)
-    .pipe(elm.bundle(ELM_BUNDLE).on('error', e => console.log(e)))
+    .pipe(
+      elm.bundle(ELM_BUNDLE, { debug: true }).on('error', e => console.log(e))
+    )
     .pipe(gulp.dest(OUTPUT));
 });
 

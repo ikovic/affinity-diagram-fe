@@ -4,7 +4,8 @@ import Models.Issue exposing (Issue)
 
 
 type alias Bucket =
-    { label : String
+    { id : String
+    , label : String
     , points : Int
     , issues : List Issue
     }

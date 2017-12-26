@@ -23,7 +23,8 @@ initialModel =
           }
         ]
     , buckets =
-        [ { label = "Start here"
+        [ { id = "123321"
+          , label = "Start here"
           , points = 1
           , issues =
                 [ { id = "1001"
