@@ -15,7 +15,7 @@ view buckets =
 
 bucketLevel : Bucket -> Html msg
 bucketLevel bucket =
-    div [ class "hero is-light" ]
+    div [ class "hero is-light bucket-container" ]
         [ div [ class "hero-body bucket-body" ]
             [ div [ class "is-fullwidth light-border--bottom" ]
                 [ h5 [ class "title is-5" ]

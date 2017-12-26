@@ -1,13 +1,13 @@
+// VARIABLES
+
 $grey-lighter: hsl(0, 0%, 86%);
 $spc-s: 0.5rem;
 $spc-m: 1rem;
 
+// HELPER CLASSES
+
 .is-fullwidth {
   width: 100%;
-}
-
-.bucket-body {
-  padding: 1rem;
 }
 
 .light-border--bottom {
@@ -22,4 +22,17 @@ $spc-m: 1rem;
 .margin-m--vertical {
   margin-top: $spc-m;
   margin-bottom: $spc-m;
+}
+
+// BUCKETS
+
+.bucket-body {
+  padding-top: 1rem;
+  padding-bottom: 0;
+}
+
+.bucket-container:last-child {
+  .light-border--bottom {
+    border-bottom: none;
+  }
 }
