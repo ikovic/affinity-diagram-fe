@@ -1,7 +1,7 @@
-module Views.Header exposing (..)
+module Views.Header exposing (view)
 
 import Html exposing (..)
-import Html.Attributes exposing (attribute, class, classList, href, id, placeholder, src, alt)
+import Html.Attributes exposing (attribute, class, href, id, placeholder, src, alt)
 
 
 view : Html msg
