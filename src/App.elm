@@ -2,6 +2,9 @@ module App exposing (..)
 
 import Html exposing (Html, section, div, text, program)
 import Html.Attributes exposing (class)
+import Model exposing (Model, initialModel)
+import Msg exposing (Msg)
+import Update exposing (update)
 import Models.Issue exposing (Issue)
 import Models.Bucket exposing (Bucket)
 import Views.Header as Header
@@ -9,46 +12,11 @@ import Views.Issues as Issues
 import Views.Buckets as Buckets
 
 
--- MODEL --
-
-
-type alias Model =
-    { issues : List Issue, buckets : List Bucket }
-
-
 init : ( Model, Cmd Msg )
 init =
-    ( { issues =
-            [ { id = "1000"
-              , key = "EX-01"
-              , name = "Some Issue"
-              , summary = "Issue description just a bit longer than name. Bad description!"
-              }
-            , { id = "1001"
-              , key = "EX-02"
-              , name = "Other Issue"
-              , summary = "Issue description just a weenie bit longer than name. People never learn!"
-              }
-            ]
-      , buckets =
-            [ { label = "Start here"
-              , points = 1
-              , issues =
-                    [ { id = "1001"
-                      , key = "EX-02"
-                      , name = "Other Issue"
-                      , summary = "Issue description just a weenie bit longer than name. People never learn!"
-                      }
-                    ]
-              }
-            ]
-      }
+    ( initialModel
     , Cmd.none
     )
-
-
-type Msg
-    = NoOp
 
 
 
@@ -70,15 +38,6 @@ view model =
                 ]
             ]
         ]
-
-
-
--- UPDATE
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    ( model, Cmd.none )
 
 
 
