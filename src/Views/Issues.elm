@@ -1,4 +1,4 @@
-module Views.Issues exposing (view)
+module Views.Issues exposing (view, issueBox)
 
 import Models.Issue exposing (..)
 import Html exposing (..)

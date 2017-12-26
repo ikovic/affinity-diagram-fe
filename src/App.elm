@@ -3,15 +3,17 @@ module App exposing (..)
 import Html exposing (Html, section, div, text, program)
 import Html.Attributes exposing (class)
 import Models.Issue exposing (Issue)
+import Models.Bucket exposing (Bucket)
 import Views.Header as Header
 import Views.Issues as Issues
+import Views.Buckets as Buckets
 
 
 -- MODEL --
 
 
 type alias Model =
-    { issues : List Issue }
+    { issues : List Issue, buckets : List Bucket }
 
 
 init : ( Model, Cmd Msg )
@@ -26,6 +28,18 @@ init =
               , key = "EX-02"
               , name = "Other Issue"
               , summary = "Issue description just a weenie bit longer than name. People never learn!"
+              }
+            ]
+      , buckets =
+            [ { label = "Default"
+              , points = 1
+              , issues =
+                    [ { id = "1001"
+                      , key = "EX-02"
+                      , name = "Other Issue"
+                      , summary = "Issue description just a weenie bit longer than name. People never learn!"
+                      }
+                    ]
               }
             ]
       }
@@ -48,10 +62,10 @@ view model =
         , section [ class "section" ]
             [ div [ class "container" ]
                 [ div [ class "columns" ]
-                    [ div [ class "column is-one-quarter hero is-fullheight" ]
+                    [ div [ class "column is-one-quarter hero is-fullheight is-info" ]
                         [ Issues.view model.issues ]
                     , div [ class "column hero is-fullheight" ]
-                        [ text "Auto" ]
+                        [ Buckets.view model.buckets ]
                     ]
                 ]
             ]
