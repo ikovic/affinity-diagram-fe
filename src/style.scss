@@ -1,7 +1,25 @@
+$grey-lighter: hsl(0, 0%, 86%);
+$spc-s: 0.5rem;
+$spc-m: 1rem;
+
 .is-fullwidth {
   width: 100%;
 }
 
 .bucket-body {
-  padding: 1.5rem;
+  padding: 1rem;
+}
+
+.light-border--bottom {
+  border-bottom: 1px solid $grey-lighter;
+}
+
+.margin-s--vertical {
+  margin-top: $spc-s;
+  margin-bottom: $spc-s;
+}
+
+.margin-m--vertical {
+  margin-top: $spc-m;
+  margin-bottom: $spc-m;
 }

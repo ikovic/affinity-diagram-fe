@@ -31,7 +31,11 @@ init =
               }
             ]
       , buckets =
-            [ { label = "Default"
+            [ { label = "First"
+              , points = 0
+              , issues = []
+              }
+            , { label = "Start here"
               , points = 1
               , issues =
                     [ { id = "1001"
@@ -40,6 +44,10 @@ init =
                       , summary = "Issue description just a weenie bit longer than name. People never learn!"
                       }
                     ]
+              }
+            , { label = "Last"
+              , points = 0
+              , issues = []
               }
             ]
       }
@@ -64,7 +72,7 @@ view model =
                 [ div [ class "columns" ]
                     [ div [ class "column is-one-quarter hero is-fullheight is-info" ]
                         [ Issues.view model.issues ]
-                    , div [ class "column hero is-fullheight" ]
+                    , div [ class "column hero is-fullheight is-paddingless" ]
                         [ Buckets.view model.buckets ]
                     ]
                 ]
