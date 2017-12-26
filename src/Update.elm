@@ -11,6 +11,9 @@ update msg model =
         Msg.AddBucket previousBucket ->
             ( addBucket model previousBucket, Cmd.none )
 
+        Msg.RemoveBucket bucket ->
+            ( removeBucket model bucket, Cmd.none )
+
 
 addBucket : Model -> Bucket -> Model
 addBucket model previousBucket =
@@ -25,4 +28,11 @@ addBucket model previousBucket =
                 )
                 []
                 model.buckets
+    }
+
+
+removeBucket : Model -> Bucket -> Model
+removeBucket model bucket =
+    { model
+        | buckets = List.filter (\b -> b.id /= bucket.id) model.buckets
     }

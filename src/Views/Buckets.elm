@@ -36,7 +36,7 @@ bucketLevel : Bucket -> Html Msg
 bucketLevel bucket =
     div [ class "hero bucket-container light-border--bottom" ]
         [ addBucket bucket
-        , removeBucket
+        , removeBucket bucket
         , div [ class "hero-body bucket-body" ]
             [ div [ class "is-fullwidth" ]
                 [ h5 [ class "title is-5" ]
@@ -64,14 +64,18 @@ addBucket previousBucket =
             ]
 
 
-removeBucket : Html msg
-removeBucket =
-    button [ class "remove-bucket button is-danger is-rounded" ]
-        [ span [ class "icon" ]
-            [ i [ class "fa fa-minus" ]
-                []
+removeBucket : Bucket -> Html Msg
+removeBucket bucket =
+    let
+        message =
+            Msg.RemoveBucket bucket
+    in
+        button [ class "remove-bucket button is-danger is-rounded", onClick message ]
+            [ span [ class "icon" ]
+                [ i [ class "fa fa-minus" ]
+                    []
+                ]
             ]
-        ]
 
 
 issueInBucket : Issue -> Html msg
