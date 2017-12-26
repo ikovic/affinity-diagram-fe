@@ -31,11 +31,7 @@ init =
               }
             ]
       , buckets =
-            [ { label = "First"
-              , points = 0
-              , issues = []
-              }
-            , { label = "Start here"
+            [ { label = "Start here"
               , points = 1
               , issues =
                     [ { id = "1001"
@@ -44,10 +40,6 @@ init =
                       , summary = "Issue description just a weenie bit longer than name. People never learn!"
                       }
                     ]
-              }
-            , { label = "Last"
-              , points = 0
-              , issues = []
               }
             ]
       }

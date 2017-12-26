@@ -1,4 +1,4 @@
-module Views.Buckets exposing (..)
+module Views.Buckets exposing (view)
 
 import Models.Bucket exposing (Bucket)
 import Models.Issue exposing (Issue)
@@ -10,12 +10,29 @@ import Views.Issues exposing (issueBox)
 view : List Bucket -> Html msg
 view buckets =
     div []
-        (List.map bucketLevel buckets)
+        ([ lockedLevel "First" ]
+            ++ (List.map bucketLevel buckets)
+            ++ [ lockedLevel "Last" ]
+        )
+
+
+lockedLevel : String -> Html msg
+lockedLevel label =
+    div [ class "hero is-light bucket-container" ]
+        [ div [ class "hero-body bucket-body" ]
+            [ div [ class "is-fullwidth light-border--bottom padding-l--bottom" ]
+                [ h5 [ class "title is-5" ]
+                    [ text label ]
+                , h6 [ class "subtitle is-6" ]
+                    [ text "Drop issue here to create a new row" ]
+                ]
+            ]
+        ]
 
 
 bucketLevel : Bucket -> Html msg
 bucketLevel bucket =
-    div [ class "hero is-light bucket-container" ]
+    div [ class "hero bucket-container" ]
         [ addBucket
         , removeBucket
         , div [ class "hero-body bucket-body" ]

@@ -4,6 +4,7 @@ $grey-lighter: hsl(0, 0%, 86%);
 $spc-xs: 0.25rem;
 $spc-s: 0.5rem;
 $spc-m: 1rem;
+$spc-l: 1.5rem;
 
 // HELPER CLASSES
 
@@ -23,6 +24,10 @@ $spc-m: 1rem;
 .margin-m--vertical {
   margin-top: $spc-m;
   margin-bottom: $spc-m;
+}
+
+.padding-l--bottom {
+  padding-bottom: $spc-l;
 }
 
 // BUCKETS
