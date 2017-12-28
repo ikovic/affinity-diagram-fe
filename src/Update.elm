@@ -1,5 +1,6 @@
 module Update exposing (update)
 
+import Html5.DragDrop as DragDrop
 import Msg exposing (Msg)
 import Model exposing (Model)
 import Models.Bucket exposing (Bucket)
@@ -13,6 +14,31 @@ update msg model =
 
         Msg.RemoveBucket bucket ->
             ( removeBucket model bucket, Cmd.none )
+
+        Msg.DragDropMsg msg_ ->
+            let
+                ( model_, result ) =
+                    DragDrop.update msg_ model.dragDrop
+            in
+                ( { model
+                    | dragDrop = model_
+                    , buckets =
+                        case result of
+                            Nothing ->
+                                model.buckets
+
+                            Just ( issue, bucket ) ->
+                                List.map
+                                    (\b ->
+                                        if bucket.id == b.id then
+                                            { b | issues = b.issues ++ [ issue ] }
+                                        else
+                                            b
+                                    )
+                                    model.buckets
+                  }
+                , Cmd.none
+                )
 
 
 addBucket : Model -> Bucket -> Model

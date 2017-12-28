@@ -1,11 +1,12 @@
 module Model exposing (Model, initialModel)
 
+import Html5.DragDrop as DragDrop
 import Models.Issue exposing (Issue)
 import Models.Bucket exposing (Bucket)
 
 
 type alias Model =
-    { issues : List Issue, buckets : List Bucket }
+    { issues : List Issue, buckets : List Bucket, dragDrop : DragDrop.Model Issue Bucket }
 
 
 initialModel : Model
@@ -35,4 +36,5 @@ initialModel =
                 ]
           }
         ]
+    , dragDrop = DragDrop.init
     }

@@ -1,5 +1,6 @@
 module Views.Buckets exposing (view)
 
+import Html5.DragDrop as DragDrop
 import Models.Bucket exposing (Bucket)
 import Models.Issue exposing (Issue)
 import Html exposing (..)
@@ -43,7 +44,7 @@ bucketLevel bucket =
                     [ text bucket.label ]
                 , h6 [ class "subtitle is-6" ]
                     [ text (toString bucket.points ++ " " ++ "SP") ]
-                , div [ class "level margin-m--vertical" ]
+                , div (class "level margin-m--vertical" :: DragDrop.droppable Msg.DragDropMsg bucket)
                     (List.map issueInBucket bucket.issues)
                 ]
             ]
@@ -78,7 +79,7 @@ removeBucket bucket =
             ]
 
 
-issueInBucket : Issue -> Html msg
+issueInBucket : Issue -> Html Msg
 issueInBucket issue =
     div [ class "level-item" ]
         [ issueBox issue ]
