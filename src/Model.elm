@@ -14,13 +14,15 @@ initialModel =
     { issues =
         [ { id = "1000"
           , key = "EX-01"
-          , name = "Some Issue"
-          , summary = "Issue description just a bit longer than name. Bad description!"
+          , url = "http://jsonprettyprint.com/json-pretty-printer.php"
+          , summary = "Some Issue"
+          , description = "Issue description just a bit longer than name. Bad description!"
           }
         , { id = "1001"
           , key = "EX-02"
-          , name = "Other Issue"
-          , summary = "Issue description just a weenie bit longer than name. People never learn!"
+          , url = "http://jsonprettyprint.com/json-pretty-printer.php"
+          , summary = "Other Issue"
+          , description = "Issue description just a weenie bit longer than name. People never learn!"
           }
         ]
     , buckets =
@@ -30,8 +32,9 @@ initialModel =
           , issues =
                 [ { id = "1001"
                   , key = "EX-02"
-                  , name = "Other Issue"
-                  , summary = "Issue description just a weenie bit longer than name. People never learn!"
+                  , url = "http://jsonprettyprint.com/json-pretty-printer.php"
+                  , summary = "Other Issue"
+                  , description = "Issue description just a weenie bit longer than name. People never learn!"
                   }
                 ]
           }

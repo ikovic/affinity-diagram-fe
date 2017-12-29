@@ -5,17 +5,16 @@ import Html.Attributes exposing (class)
 import Model exposing (Model, initialModel)
 import Msg exposing (Msg)
 import Update exposing (update)
-import Models.Issue exposing (Issue)
-import Models.Bucket exposing (Bucket)
 import Views.Header as Header
 import Views.Issues as Issues
 import Views.Buckets as Buckets
+import Api.Api as API
 
 
 init : ( Model, Cmd Msg )
 init =
     ( initialModel
-    , Cmd.none
+    , API.send
     )
 
 

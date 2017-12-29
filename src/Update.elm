@@ -41,6 +41,16 @@ update msg model =
                 , Cmd.none
                 )
 
+        Msg.LoadIssues (Ok loadedIssues) ->
+            ( { model | issues = loadedIssues }, Cmd.none )
+
+        Msg.LoadIssues (Err thingy) ->
+            let
+                _ =
+                    Debug.log "yo" thingy
+            in
+                ( model, Cmd.none )
+
 
 addBucket : Model -> Bucket -> Model
 addBucket model previousBucket =
