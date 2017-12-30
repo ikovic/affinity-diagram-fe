@@ -35,6 +35,22 @@ $spc-l: 1.5rem;
   position: relative;
 }
 
+.bucket-container:last-child {
+  border-bottom: none;
+}
+
+.bucket-body {
+  padding-top: 1rem;
+  padding-bottom: 0;
+}
+
+.bucket-holder {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  min-height: 4rem;
+}
+
 .add-bucket {
   position: absolute;
   bottom: $spc-xs;
@@ -47,11 +63,9 @@ $spc-l: 1.5rem;
   right: $spc-xs;
 }
 
-.bucket-body {
-  padding-top: 1rem;
-  padding-bottom: 0;
-}
-
-.bucket-container:last-child {
-  border-bottom: none;
+// additional margin when issue is in bucket
+.bucket-holder {
+  .issue-box {
+    margin: 0.5rem;
+  }
 }

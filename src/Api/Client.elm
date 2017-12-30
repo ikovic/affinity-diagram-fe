@@ -1,4 +1,4 @@
-module Api.Api exposing (..)
+module Api.Client exposing (..)
 
 import Http
 import Json.Decode as Decode exposing (list, map5, string, field)

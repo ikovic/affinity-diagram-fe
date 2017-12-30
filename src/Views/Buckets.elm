@@ -44,7 +44,7 @@ bucketLevel bucket =
                     [ text bucket.label ]
                 , h6 [ class "subtitle is-6" ]
                     [ text (toString bucket.points ++ " " ++ "SP") ]
-                , div (class "level margin-m--vertical" :: DragDrop.droppable Msg.DragDropMsg bucket)
+                , div (class "bucket-holder margin-m--vertical" :: DragDrop.droppable Msg.DragDropMsg bucket)
                     (List.map issueInBucket bucket.issues)
                 ]
             ]
@@ -81,5 +81,4 @@ removeBucket bucket =
 
 issueInBucket : Issue -> Html Msg
 issueInBucket issue =
-    div [ class "level-item" ]
-        [ issueBox issue ]
+    issueBox issue

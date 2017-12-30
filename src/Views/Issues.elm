@@ -15,7 +15,7 @@ view issues =
 
 issueBox : Issue -> Html Msg
 issueBox issue =
-    div (class "box" :: DragDrop.draggable Msg.DragDropMsg issue)
+    div (class "box issue-box" :: DragDrop.draggable Msg.DragDropMsg issue)
         [ article [ class "media" ]
             [ div [ class "media-content" ]
                 [ div [ class "content" ]

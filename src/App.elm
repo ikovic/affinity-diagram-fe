@@ -8,7 +8,7 @@ import Update exposing (update)
 import Views.Header as Header
 import Views.Issues as Issues
 import Views.Buckets as Buckets
-import Api.Api as API
+import Api.Client as API
 
 
 init : ( Model, Cmd Msg )
