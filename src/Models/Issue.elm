@@ -2,4 +2,4 @@ module Models.Issue exposing (..)
 
 
 type alias Issue =
-    { id : String, description : String, key : String, summary : String, url : String }
+    { url : String, key : String, id : String, summary : String, description : String }

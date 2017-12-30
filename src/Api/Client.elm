@@ -11,12 +11,6 @@ getIssues =
     Http.get "http://localhost:8080/backlog/1" decodeIssues
 
 
-type alias Metadata =
-    { author : String
-    , pages : Int
-    }
-
-
 decodeIssues : Decode.Decoder (List Issue)
 decodeIssues =
     Decode.list decodeIssue

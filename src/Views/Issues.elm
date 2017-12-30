@@ -21,7 +21,8 @@ issueBox issue =
                 [ div [ class "content" ]
                     [ p []
                         [ strong []
-                            [ text (issue.key ++ " " ++ issue.summary) ]
+                            [ text issue.key ]
+                        , text (" " ++ issue.summary)
                         ]
                     ]
                 ]
