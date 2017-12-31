@@ -1,5 +1,6 @@
 module Update exposing (update)
 
+import Random
 import Html5.DragDrop as DragDrop
 import Msg exposing (Msg)
 import Model exposing (Model)
@@ -11,7 +12,10 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Msg.AddBucket previousBucket ->
-            ( addBucket model previousBucket, Cmd.none )
+            ( model, Random.generate (Msg.SaveBucket previousBucket) (Random.int 1 100000) )
+
+        Msg.SaveBucket bucket id ->
+            ( addBucket model bucket id, Cmd.none )
 
         Msg.RemoveBucket bucket ->
             ( removeBucket model bucket, Cmd.none )
@@ -45,21 +49,17 @@ update msg model =
             ( { model | issues = loadedIssues }, Cmd.none )
 
         Msg.LoadIssues (Err thingy) ->
-            let
-                _ =
-                    Debug.log "yo" thingy
-            in
-                ( model, Cmd.none )
+            ( model, Cmd.none )
 
 
-addBucket : Model -> Bucket -> Model
-addBucket model previousBucket =
+addBucket : Model -> Bucket -> Int -> Model
+addBucket model previousBucket id =
     { model
         | buckets =
             List.foldl
                 (\bucket a ->
                     if bucket.id == previousBucket.id then
-                        a ++ [ previousBucket, Bucket (toString (List.length a + 1)) "new" 0 [] ]
+                        a ++ [ previousBucket, Bucket (toString id) "new" 0 [] ]
                     else
                         a ++ [ bucket ]
                 )

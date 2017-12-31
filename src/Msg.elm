@@ -8,6 +8,7 @@ import Models.Issue exposing (Issue)
 
 type Msg
     = AddBucket Bucket
+    | SaveBucket Bucket Int
     | RemoveBucket Bucket
     | DragDropMsg (DragDrop.Msg Issue Bucket)
     | LoadIssues (Result Http.Error (List Issue))
