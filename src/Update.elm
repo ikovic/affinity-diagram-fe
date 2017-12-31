@@ -71,7 +71,8 @@ addBucket model previousBucket id =
 removeBucket : Model -> Bucket -> Model
 removeBucket model bucket =
     { model
-        | buckets = List.filter (\b -> b.id /= bucket.id) model.buckets
+        | issues = model.issues ++ bucket.issues
+        , buckets = List.filter (\b -> b.id /= bucket.id) model.buckets
     }
 
 
