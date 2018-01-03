@@ -1,8 +1,7 @@
 module Update exposing (update)
 
-import Random
 import Html5.DragDrop as DragDrop
-import Msg exposing (Msg)
+import Msg exposing (Msg, Position(..))
 import Model exposing (Model)
 import Models.Bucket exposing (Bucket)
 import Models.Issue exposing (Issue)
@@ -11,36 +10,29 @@ import Models.Issue exposing (Issue)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Msg.AddBucket previousBucket ->
-            ( model, Random.generate (Msg.SaveBucket previousBucket) (Random.int 1 100000) )
-
-        Msg.SaveBucket bucket id ->
-            ( addBucket model bucket id, Cmd.none )
+        Msg.AddBucket index ->
+            ( { model | buckets = addBucketAfterIndex model.buckets index }, Cmd.none )
 
         Msg.RemoveBucket bucket ->
             ( removeBucket model bucket, Cmd.none )
 
-        Msg.DragDropMsg msg_ ->
+        Msg.DnDIssue msg_ ->
             let
                 ( model_, result ) =
                     DragDrop.update msg_ model.dragDrop
+
+                ( buckets, issues ) =
+                    case result of
+                        Nothing ->
+                            ( model.buckets, model.issues )
+
+                        Just ( issue, position ) ->
+                            ( model.buckets, removeIssueFromIssueList model issue )
             in
                 ( { model
                     | dragDrop = model_
-                    , buckets =
-                        case result of
-                            Nothing ->
-                                model.buckets
-
-                            Just ( issue, bucket ) ->
-                                addIssueToBucket model issue bucket
-                    , issues =
-                        case result of
-                            Nothing ->
-                                model.issues
-
-                            Just ( issue, bucket ) ->
-                                removeIssueFromIssueList model issue bucket
+                    , buckets = buckets
+                    , issues = issues
                   }
                 , Cmd.none
                 )
@@ -52,20 +44,16 @@ update msg model =
             ( model, Cmd.none )
 
 
-addBucket : Model -> Bucket -> Int -> Model
-addBucket model previousBucket id =
-    { model
-        | buckets =
-            List.foldl
-                (\bucket a ->
-                    if bucket.id == previousBucket.id then
-                        a ++ [ previousBucket, Bucket (toString id) "new" 0 [] ]
-                    else
-                        a ++ [ bucket ]
-                )
-                []
-                model.buckets
-    }
+addBucketAfterIndex : List Bucket -> Int -> List Bucket
+addBucketAfterIndex buckets index =
+    let
+        bucketsBefore =
+            List.take (index + 1) buckets
+
+        bucketsAfter =
+            List.drop (index + 1) buckets
+    in
+        bucketsBefore ++ [ Bucket "123" "new" 0 [] ] ++ bucketsAfter
 
 
 removeBucket : Model -> Bucket -> Model
@@ -76,27 +64,29 @@ removeBucket model bucket =
     }
 
 
-addIssueToBucket : Model -> Issue -> Bucket -> List Bucket
-addIssueToBucket model issue bucket =
-    if isDropValid bucket.issues issue /= True then
-        model.buckets
-    else
-        List.map
-            (\b ->
-                if bucket.id == b.id then
-                    { b | issues = b.issues ++ [ issue ] }
-                else
-                    b
-            )
-            model.buckets
+addIssueToBucket : Model -> Issue -> Position -> List Bucket
+addIssueToBucket model issue position =
+    case position of
+        First ->
+            [ Bucket "123" "new" 0 [ issue ] ] ++ model.buckets
+
+        Last ->
+            model.buckets ++ [ Bucket "123" "new" 0 [ issue ] ]
+
+        Index index ->
+            List.indexedMap
+                (\idx b ->
+                    if idx == index && isDropValid b.issues issue == True then
+                        { b | issues = b.issues ++ [ issue ] }
+                    else
+                        b
+                )
+                model.buckets
 
 
-removeIssueFromIssueList : Model -> Issue -> Bucket -> List Issue
-removeIssueFromIssueList model issue bucket =
-    if isDropValid bucket.issues issue /= True then
-        model.issues
-    else
-        List.filter (\i -> i.id /= issue.id) model.issues
+removeIssueFromIssueList : Model -> Issue -> List Issue
+removeIssueFromIssueList model issue =
+    List.filter (\i -> i.id /= issue.id) model.issues
 
 
 isDropValid : List Issue -> Issue -> Bool

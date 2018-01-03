@@ -6,9 +6,14 @@ import Models.Bucket exposing (Bucket)
 import Models.Issue exposing (Issue)
 
 
+type Position
+    = First
+    | Last
+    | Index Int
+
+
 type Msg
-    = AddBucket Bucket
-    | SaveBucket Bucket Int
+    = AddBucket Int
     | RemoveBucket Bucket
-    | DragDropMsg (DragDrop.Msg Issue Bucket)
+    | DnDIssue (DragDrop.Msg Issue Position)
     | LoadIssues (Result Http.Error (List Issue))

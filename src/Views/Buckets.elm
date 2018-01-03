@@ -7,36 +7,38 @@ import Html exposing (..)
 import Html.Attributes exposing (attribute, class)
 import Html.Events exposing (onClick)
 import Views.Issues exposing (issueBox)
-import Msg exposing (Msg)
+import Msg exposing (Msg, Position(..))
 
 
 view : List Bucket -> Html Msg
 view buckets =
     div []
-        ([ lockedLevel "First" ]
-            ++ (List.map bucketLevel buckets)
-            ++ [ lockedLevel "Last" ]
+        ([ lockedLevel "First" First ]
+            ++ (List.indexedMap bucketLevel buckets)
+            ++ [ lockedLevel "Last" Last ]
         )
 
 
-lockedLevel : String -> Html msg
-lockedLevel label =
+lockedLevel : String -> Position -> Html Msg
+lockedLevel title position =
     div [ class "hero is-light bucket-container light-border--bottom" ]
         [ div [ class "hero-body bucket-body" ]
-            [ div [ class "is-fullwidth padding-l--bottom" ]
+            [ div [ class "is-fullwidth" ]
                 [ h5 [ class "title is-5" ]
-                    [ text label ]
+                    [ text title ]
                 , h6 [ class "subtitle is-6" ]
-                    [ text "Drop issue here to create a new row" ]
+                    [ text "Drop issue here to create a new bucket" ]
+                , div (class "bucket-holder margin-m--vertical" :: DragDrop.droppable Msg.DnDIssue position)
+                    []
                 ]
             ]
         ]
 
 
-bucketLevel : Bucket -> Html Msg
-bucketLevel bucket =
+bucketLevel : Int -> Bucket -> Html Msg
+bucketLevel index bucket =
     div [ class "hero bucket-container light-border--bottom" ]
-        [ addBucket bucket
+        [ addBucket index
         , removeBucket bucket
         , div [ class "hero-body bucket-body" ]
             [ div [ class "is-fullwidth" ]
@@ -44,18 +46,18 @@ bucketLevel bucket =
                     [ text bucket.label ]
                 , h6 [ class "subtitle is-6" ]
                     [ text (toString bucket.points ++ " " ++ "SP") ]
-                , div (class "bucket-holder margin-m--vertical" :: DragDrop.droppable Msg.DragDropMsg bucket)
+                , div (class "bucket-holder margin-m--vertical" :: DragDrop.droppable Msg.DnDIssue (Index index))
                     (List.map issueInBucket bucket.issues)
                 ]
             ]
         ]
 
 
-addBucket : Bucket -> Html Msg
-addBucket previousBucket =
+addBucket : Int -> Html Msg
+addBucket index =
     let
         message =
-            Msg.AddBucket previousBucket
+            Msg.AddBucket index
     in
         button [ class "add-bucket button is-primary is-rounded", onClick message ]
             [ span [ class "icon" ]
