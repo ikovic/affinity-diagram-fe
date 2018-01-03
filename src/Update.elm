@@ -27,7 +27,7 @@ update msg model =
                             ( model.buckets, model.issues )
 
                         Just ( issue, position ) ->
-                            ( model.buckets, removeIssueFromIssueList model issue )
+                            ( addIssueToBucket model issue position, removeIssueFromIssueList model issue )
             in
                 ( { model
                     | dragDrop = model_
@@ -76,10 +76,17 @@ addIssueToBucket model issue position =
         Index index ->
             List.indexedMap
                 (\idx b ->
-                    if idx == index && isDropValid b.issues issue == True then
-                        { b | issues = b.issues ++ [ issue ] }
-                    else
-                        b
+                    let
+                        found =
+                            idx == index
+
+                        validDrop =
+                            isDropValid b.issues issue
+                    in
+                        if found && validDrop then
+                            { b | issues = b.issues ++ [ issue ] }
+                        else
+                            b
                 )
                 model.buckets
 
