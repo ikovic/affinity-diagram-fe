@@ -1,5 +1,6 @@
 module Update exposing (update)
 
+import Array exposing (Array)
 import Html5.DragDrop as DragDrop
 import Msg exposing (Msg, Position(..))
 import Model exposing (Model)
@@ -13,8 +14,8 @@ update msg model =
         Msg.AddBucket index ->
             ( { model | buckets = addBucketAfterIndex model.buckets index }, Cmd.none )
 
-        Msg.RemoveBucket bucket ->
-            ( removeBucket model bucket, Cmd.none )
+        Msg.RemoveBucket index ->
+            ( removeBucket model index, Cmd.none )
 
         Msg.DnDIssue msg_ ->
             let
@@ -44,37 +45,57 @@ update msg model =
             ( model, Cmd.none )
 
 
-addBucketAfterIndex : List Bucket -> Int -> List Bucket
+addBucketAfterIndex : Array Bucket -> Int -> Array Bucket
 addBucketAfterIndex buckets index =
     let
-        bucketsBefore =
-            List.take (index + 1) buckets
+        wantedIndex =
+            index + 1
 
-        bucketsAfter =
-            List.drop (index + 1) buckets
+        lastIndex =
+            (Array.length buckets) - 1
     in
-        bucketsBefore ++ [ Bucket "123" "new" 0 [] ] ++ bucketsAfter
+        buckets
+            |> Array.slice 0 wantedIndex
+            |> Array.push (Bucket "123" "new" 0 [])
+            |> Array.append (Array.slice wantedIndex lastIndex buckets)
 
 
-removeBucket : Model -> Bucket -> Model
-removeBucket model bucket =
-    { model
-        | issues = model.issues ++ bucket.issues
-        , buckets = List.filter (\b -> b.id /= bucket.id) model.buckets
-    }
+removeBucket : Model -> Int -> Model
+removeBucket model index =
+    let
+        bucket =
+            Array.get index model.buckets
+    in
+        case bucket of
+            Nothing ->
+                model
+
+            Just foundBucket ->
+                { model
+                    | issues = model.issues ++ foundBucket.issues
+                    , buckets =
+                        model.buckets
+                            |> Array.slice 0 index
+                            |> Array.append (Array.slice (index + 1) (Array.length model.buckets - 1) model.buckets)
+                }
 
 
-addIssueToBucket : Model -> Issue -> Position -> List Bucket
+addIssueToBucket : Model -> Issue -> Position -> Array Bucket
 addIssueToBucket model issue position =
     case position of
         First ->
-            [ Bucket "123" "new" 0 [ issue ] ] ++ model.buckets
+            let
+                justNewBucket =
+                    Array.empty
+                        |> Array.push (Bucket "123" "new" 0 [ issue ])
+            in
+                Array.append justNewBucket model.buckets
 
         Last ->
-            model.buckets ++ [ Bucket "123" "new" 0 [ issue ] ]
+            Array.push (Bucket "123" "new" 0 [ issue ]) model.buckets
 
         Index index ->
-            List.indexedMap
+            Array.indexedMap
                 (\idx b ->
                     let
                         found =

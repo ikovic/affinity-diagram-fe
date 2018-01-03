@@ -1,5 +1,6 @@
 module Views.Buckets exposing (view)
 
+import Array exposing (Array)
 import Html5.DragDrop as DragDrop
 import Models.Bucket exposing (Bucket)
 import Models.Issue exposing (Issue)
@@ -10,11 +11,11 @@ import Views.Issues exposing (issueBox)
 import Msg exposing (Msg, Position(..))
 
 
-view : List Bucket -> Html Msg
+view : Array Bucket -> Html Msg
 view buckets =
     div []
         ([ lockedLevel "First" First ]
-            ++ (List.indexedMap bucketLevel buckets)
+            ++ Array.toList (Array.indexedMap bucketLevel buckets)
             ++ [ lockedLevel "Last" Last ]
         )
 
@@ -39,7 +40,7 @@ bucketLevel : Int -> Bucket -> Html Msg
 bucketLevel index bucket =
     div [ class "hero bucket-container light-border--bottom" ]
         [ addBucket index
-        , removeBucket bucket
+        , removeBucket index
         , div [ class "hero-body bucket-body" ]
             [ div [ class "is-fullwidth" ]
                 [ h5 [ class "title is-5" ]
@@ -55,30 +56,22 @@ bucketLevel index bucket =
 
 addBucket : Int -> Html Msg
 addBucket index =
-    let
-        message =
-            Msg.AddBucket index
-    in
-        button [ class "add-bucket button is-primary is-rounded", onClick message ]
-            [ span [ class "icon" ]
-                [ i [ class "fa fa-plus" ]
-                    []
-                ]
+    button [ class "add-bucket button is-primary is-rounded", onClick (Msg.AddBucket index) ]
+        [ span [ class "icon" ]
+            [ i [ class "fa fa-plus" ]
+                []
             ]
+        ]
 
 
-removeBucket : Bucket -> Html Msg
-removeBucket bucket =
-    let
-        message =
-            Msg.RemoveBucket bucket
-    in
-        button [ class "remove-bucket button is-danger is-rounded", onClick message ]
-            [ span [ class "icon" ]
-                [ i [ class "fa fa-minus" ]
-                    []
-                ]
+removeBucket : Int -> Html Msg
+removeBucket index =
+    button [ class "remove-bucket button is-danger is-rounded", onClick (Msg.RemoveBucket index) ]
+        [ span [ class "icon" ]
+            [ i [ class "fa fa-minus" ]
+                []
             ]
+        ]
 
 
 issueInBucket : Issue -> Html Msg
