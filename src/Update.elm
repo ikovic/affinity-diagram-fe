@@ -51,13 +51,15 @@ addBucketAfterIndex buckets index =
         wantedIndex =
             index + 1
 
-        lastIndex =
-            (Array.length buckets) - 1
+        withNewBucket =
+            buckets
+                |> Array.slice 0 wantedIndex
+                |> Array.push (Bucket "123" "new" 0 [])
+
+        bucketsAfter =
+            Array.slice wantedIndex (Array.length buckets) buckets
     in
-        buckets
-            |> Array.slice 0 wantedIndex
-            |> Array.push (Bucket "123" "new" 0 [])
-            |> Array.append (Array.slice wantedIndex lastIndex buckets)
+        Array.append withNewBucket bucketsAfter
 
 
 removeBucket : Model -> Int -> Model
@@ -71,13 +73,17 @@ removeBucket model index =
                 model
 
             Just foundBucket ->
-                { model
-                    | issues = model.issues ++ foundBucket.issues
-                    , buckets =
-                        model.buckets
-                            |> Array.slice 0 index
-                            |> Array.append (Array.slice (index + 1) (Array.length model.buckets - 1) model.buckets)
-                }
+                let
+                    bucketsBefore =
+                        Array.slice 0 index model.buckets
+
+                    bucketsAfter =
+                        Array.slice (index + 1) (Array.length model.buckets - 1) model.buckets
+                in
+                    { model
+                        | issues = model.issues ++ foundBucket.issues
+                        , buckets = Array.append bucketsBefore bucketsAfter
+                    }
 
 
 addIssueToBucket : Model -> Issue -> Position -> Array Bucket
