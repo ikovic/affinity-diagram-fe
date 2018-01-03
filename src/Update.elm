@@ -78,7 +78,7 @@ removeBucket model index =
                         Array.slice 0 index model.buckets
 
                     bucketsAfter =
-                        Array.slice (index + 1) (Array.length model.buckets - 1) model.buckets
+                        Array.slice (index + 1) (Array.length model.buckets) model.buckets
                 in
                     { model
                         | issues = model.issues ++ foundBucket.issues
