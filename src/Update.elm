@@ -54,7 +54,7 @@ addBucketAfterIndex buckets index =
         withNewBucket =
             buckets
                 |> Array.slice 0 wantedIndex
-                |> Array.push (Bucket "123" "new" 0 [])
+                |> Array.push (Bucket "Bucket" 0 [])
 
         bucketsAfter =
             Array.slice wantedIndex (Array.length buckets) buckets
@@ -93,12 +93,12 @@ addIssueToBucket model issue position =
             let
                 justNewBucket =
                     Array.empty
-                        |> Array.push (Bucket "123" "new" 0 [ issue ])
+                        |> Array.push (Bucket "Bucket" 0 [ issue ])
             in
                 Array.append justNewBucket model.buckets
 
         Last ->
-            Array.push (Bucket "123" "new" 0 [ issue ]) model.buckets
+            Array.push (Bucket "Bucket" 0 [ issue ]) model.buckets
 
         Index index ->
             Array.indexedMap

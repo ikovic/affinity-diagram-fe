@@ -17,8 +17,7 @@ initialModel =
         []
     , buckets =
         Array.fromList
-            [ { id = "123321"
-              , label = "Start here"
+            [ { label = "Start here"
               , points = 1
               , issues =
                     []
