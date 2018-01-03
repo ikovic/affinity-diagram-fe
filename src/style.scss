@@ -30,6 +30,17 @@ $spc-l: 1.5rem;
   padding-bottom: $spc-l;
 }
 
+.field-label--inline {
+  .label {
+    margin-right: $spc-s;
+    margin-bottom: 0;
+  }
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 // BUCKETS
 .bucket-container {
   position: relative;
